@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import heroFleet from "@/assets/hero-fleet.jpg";
 import { Page, SectionTitle } from "@/components/site/Page";
-import { HeroSlider } from "@/components/site/HeroSlider";
+import { HeroSection } from "@/components/site/HeroSection";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/")({
@@ -106,7 +106,7 @@ function Home() {
   return (
     <Page>
       {/* Hero */}
-      <HeroSlider />
+      <HeroSection />
 
       {/* Stats */}
       <section className="mx-auto max-w-7xl px-5 py-16">

@@ -148,6 +148,25 @@
   }
 }
 
+@keyframes glow-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--gold) 45%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 28px 8px color-mix(in oklab, var(--gold) 22%, transparent);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
 @layer base {
   * {
     border-color: var(--color-border);
@@ -202,11 +221,19 @@
   box-shadow: var(--shadow-glow);
 }
 
+@utility glow-pulse {
+  animation: glow-pulse 2.6s ease-in-out infinite;
+}
+
 @utility reveal {
   opacity: 0;
   animation: rise-in 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
   animation-timeline: view();
   animation-range: entry 0% cover 26%;
+}
+
+@utility reveal-static {
+  animation: rise-in 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
 }
 
 @utility hover-lift {
@@ -219,6 +246,32 @@
     transform: translateY(-8px);
     border-color: color-mix(in oklab, var(--gold) 45%, transparent);
     box-shadow: var(--shadow-glow);
+  }
+}
+
+@utility gradient-border {
+  position: relative;
+  background: color-mix(in oklab, var(--card) 92%, transparent);
+  border-radius: var(--radius-2xl);
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: calc(var(--radius-2xl) + 1px);
+    padding: 1px;
+    background: linear-gradient(
+      135deg,
+      color-mix(in oklab, var(--gold) 70%, transparent),
+      color-mix(in oklab, var(--accent) 55%, transparent),
+      color-mix(in oklab, var(--gold) 70%, transparent)
+    );
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
   }
 }
 

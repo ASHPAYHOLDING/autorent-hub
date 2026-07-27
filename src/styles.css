@@ -39,7 +39,7 @@
   --color-success: var(--success);
   --color-warning: var(--warning);
   --font-sans: "IBM Plex Sans Arabic", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Reem Kufi", "IBM Plex Sans Arabic", sans-serif;
+  --font-display: "IBM Plex Sans Arabic", ui-sans-serif, system-ui, sans-serif;
   --animate-float: float 7s ease-in-out infinite;
   --animate-shine: shine 6s linear infinite;
   --animate-marquee: marquee 34s linear infinite;

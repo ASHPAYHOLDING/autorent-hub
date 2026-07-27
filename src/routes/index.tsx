@@ -118,12 +118,12 @@ function Home() {
                 <span className="animate-pulse-ring absolute inline-flex h-full w-full rounded-full bg-primary" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
               </span>
-              منصة SaaS لتأجير السيارات
+              موقع ونظام متكامل
             </span>
             <h1 className="mt-6 text-4xl font-black leading-[1.25] sm:text-5xl lg:text-6xl">
-              موقع ونظام متكامل
+              كل ما يحتاجه مكتب
               <br />
-              <span className="gold-text">لمكتب تأجير سيّاراتك</span>
+              <span className="gold-text">تأجير سيّاراتك</span>
             </h1>
             <p className="mt-5 max-w-xl text-lg leading-9 text-muted-foreground">
               اشترك شهرياً أو سنوياً واحصل خلال دقائق على موقع خاص بمكتبك لعرض سياراتك، مع نظام

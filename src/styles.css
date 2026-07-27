@@ -139,6 +139,15 @@
   }
 }
 
+@keyframes aurora {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  100% {
+    transform: translate3d(-4%, 5%, 0) scale(1.12);
+  }
+}
+
 @layer base {
   * {
     border-color: var(--color-border);
@@ -146,6 +155,18 @@
 
   body {
     background-color: var(--color-background);
+    background-image:
+      radial-gradient(
+        60rem 40rem at 85% -10%,
+        color-mix(in oklab, var(--gold) 16%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        50rem 34rem at 5% 12%,
+        color-mix(in oklab, var(--accent) 12%, transparent),
+        transparent 70%
+      );
+    background-attachment: fixed;
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
@@ -155,23 +176,27 @@
   h2,
   h3 {
     font-family: var(--font-display);
+    letter-spacing: -0.01em;
   }
 }
 
 @utility gold-text {
   background: var(--gradient-gold);
+  background-size: 220% auto;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  animation: shine 6s linear infinite;
 }
 
 @utility glass {
   background:
-    var(--gradient-glass), color-mix(in oklab, var(--card) 88%, transparent);
+    var(--gradient-glass), color-mix(in oklab, var(--card) 82%, transparent);
   border: 1px solid var(--color-border);
-  backdrop-filter: blur(14px);
+  backdrop-filter: blur(16px);
   box-shadow: var(--shadow-soft);
 }
+
 
 @utility glow {
   box-shadow: var(--shadow-glow);

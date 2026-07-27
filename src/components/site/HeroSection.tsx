@@ -202,7 +202,7 @@ export function HeroSection() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_1fr] lg:gap-14">
           {/* copy */}
-          <div className="order-2 space-y-7 lg:order-1">
+          <div className="order-1 space-y-7">
             <span className="reveal-static inline-flex items-center gap-2 rounded-full border border-primary/25 bg-primary/8 px-4 py-1.5 text-xs font-semibold text-primary">
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-pulse-ring rounded-full bg-primary" />
@@ -300,7 +300,7 @@ export function HeroSection() {
           </div>
 
           {/* interactive product preview */}
-          <div className="order-1 lg:order-2">
+          <div className="order-2">
             <div
               ref={cardRef}
               onMouseMove={onMove}

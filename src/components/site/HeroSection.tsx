@@ -1,114 +1,160 @@
-import { useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import {
   ArrowLeft,
-  Check,
-  Shield,
-  Clock,
-  Headphones,
-  Phone,
-  User,
   Car,
-  FileSignature,
   CalendarCheck,
-  Sparkles,
+  FileSignature,
   LayoutDashboard,
-  List,
-  FileText,
+  Check,
+  Sparkles,
+  Phone,
+  Building2,
+  TrendingUp,
+  ShieldCheck,
+  Zap,
 } from "lucide-react";
-import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-const trustBadges = [
-  { icon: Shield, text: "بيانات معزولة ١٠٠٪" },
-  { icon: Clock, text: "إطلاق خلال دقائق" },
-  { icon: Headphones, text: "دعم عربي 24/7" },
-  { icon: Check, text: "إلغاء في أي وقت" },
-];
-
 const tabs = [
-  { id: "dashboard", label: "لوحة التحكم", icon: LayoutDashboard },
-  { id: "fleet", label: "إدارة الأسطول", icon: List },
-  { id: "contracts", label: "العقود الإلكترونية", icon: FileText },
-];
+  { id: "dashboard", label: "لوحة التحكم", short: "اللوحة", icon: LayoutDashboard },
+  { id: "fleet", label: "إدارة الأسطول", short: "الأسطول", icon: Car },
+  { id: "contracts", label: "العقود", short: "العقود", icon: FileSignature },
+] as const;
 
-function DashboardMockup() {
+type TabId = (typeof tabs)[number]["id"];
+
+function useCountUp(target: number, run: boolean, duration = 1400) {
+  const [value, setValue] = useState(0);
+  useEffect(() => {
+    if (!run) return;
+    let raf = 0;
+    const start = performance.now();
+    const tick = (now: number) => {
+      const p = Math.min((now - start) / duration, 1);
+      setValue(Math.round(target * (1 - Math.pow(1 - p, 3))));
+      if (p < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [target, run, duration]);
+  return value;
+}
+
+function DashboardPanel() {
+  const cars = useCountUp(42, true);
+  const bookings = useCountUp(128, true);
+  const revenue = useCountUp(86, true);
+  const bars = [38, 62, 46, 78, 55, 92, 70];
+
   return (
-    <div className="relative mx-auto w-full max-w-[280px] animate-float-slow sm:max-w-md">
-      <div className="absolute inset-0 scale-110 rounded-full bg-gradient-to-tr from-gold/20 to-gold-soft/10 blur-2xl" />
-      <div className="relative transform rounded-3xl border border-border/60 bg-card p-5 shadow-2xl transition-transform duration-700 hover:rotate-0 -rotate-2">
-        <div className="mb-4 flex items-center justify-between border-b border-border/40 pb-3">
-          <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-primary/10">
-              <Car className="h-4 w-4 text-primary" />
-            </div>
-            <span className="text-sm font-bold">لوحة التحكم</span>
+    <div className="space-y-4">
+      <div className="grid grid-cols-3 gap-3">
+        {[
+          { label: "سيارة", value: cars, tone: "text-primary" },
+          { label: "حجز هذا الشهر", value: bookings, tone: "text-foreground" },
+          { label: "نسبة الإشغال", value: `${revenue}%`, tone: "text-accent-foreground" },
+        ].map((s) => (
+          <div key={s.label} className="rounded-2xl border border-border/60 bg-surface/70 p-3 text-center">
+            <p className={`font-display text-xl font-bold ${s.tone}`}>{s.value}</p>
+            <p className="mt-1 text-[10px] leading-4 text-muted-foreground">{s.label}</p>
           </div>
-          <div className="flex gap-1.5">
-            <div className="h-2 w-2 rounded-full bg-destructive" />
-            <div className="h-2 w-2 rounded-full bg-amber-500" />
-            <div className="h-2 w-2 rounded-full bg-emerald-500" />
-          </div>
+        ))}
+      </div>
+
+      <div className="rounded-2xl border border-border/60 bg-surface/50 p-4">
+        <div className="mb-3 flex items-center justify-between">
+          <span className="text-xs font-semibold text-muted-foreground">إيرادات الأسبوع</span>
+          <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2 py-1 text-[10px] font-bold text-primary">
+            <TrendingUp className="h-3 w-3" /> +18%
+          </span>
         </div>
-        <div className="space-y-4">
-          <div className="grid grid-cols-3 gap-3">
-            <div className="rounded-2xl bg-muted/50 p-3 text-center">
-              <p className="text-lg font-black text-primary">42</p>
-              <p className="text-[10px] text-muted-foreground">سيارة</p>
-            </div>
-            <div className="rounded-2xl bg-muted/50 p-3 text-center">
-              <p className="text-lg font-black text-emerald-500">38</p>
-              <p className="text-[10px] text-muted-foreground">متاحة</p>
-            </div>
-            <div className="rounded-2xl bg-muted/50 p-3 text-center">
-              <p className="text-lg font-black text-amber-500">4</p>
-              <p className="text-[10px] text-muted-foreground">مؤجرة</p>
-            </div>
-          </div>
-          <div className="flex h-28 items-end justify-between gap-2 rounded-2xl bg-muted/30 p-4">
-            {[40, 65, 45, 80, 55, 90, 70].map((h, i) => (
-              <div
-                key={i}
-                className="flex-1 rounded-t-lg bg-gradient-to-t from-primary/80 to-gold/60 transition-all duration-500"
-                style={{ height: `${h}%` }}
-              />
-            ))}
-          </div>
-          <div className="space-y-2">
-            <div className="h-2.5 w-3/4 rounded-full bg-muted/50" />
-            <div className="h-2.5 w-1/2 rounded-full bg-muted/30" />
-          </div>
+        <div className="flex h-28 items-end justify-between gap-2">
+          {bars.map((h, i) => (
+            <div
+              key={i}
+              className="flex-1 origin-bottom rounded-t-lg bg-[image:var(--gradient-brand)] animate-bar-rise"
+              style={{ height: `${h}%`, animationDelay: `${i * 70}ms` }}
+            />
+          ))}
         </div>
       </div>
     </div>
   );
 }
 
-function FleetMockup() {
+function FleetPanel() {
+  const rows = [
+    { name: "تويوتا كامري 2024", plate: "أ ب ج 1234", status: "متاحة", tone: "bg-primary/12 text-primary" },
+    { name: "هيونداي سوناتا 2023", plate: "د هـ و 5521", status: "مؤجرة", tone: "bg-accent/25 text-accent-foreground" },
+    { name: "لاند كروزر 2024", plate: "ز ح ط 8890", status: "صيانة", tone: "bg-destructive/12 text-destructive" },
+  ];
   return (
-    <div className="relative mx-auto w-full max-w-[280px] animate-float-slow sm:max-w-md">
-      <div className="absolute inset-0 scale-110 rounded-full bg-gradient-to-tr from-emerald-500/10 to-primary/10 blur-2xl" />
-      <div className="relative space-y-4">
+    <div className="space-y-3">
+      {rows.map((r, i) => (
+        <div
+          key={r.plate}
+          className="reveal-static flex items-center gap-3 rounded-2xl border border-border/60 bg-surface/60 p-3 transition-transform hover:translate-x-[-4px]"
+          style={{ animationDelay: `${i * 90}ms` }}
+        >
+          <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-card">
+            <Car className="h-5 w-5 text-primary" />
+          </span>
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-sm font-semibold">{r.name}</p>
+            <p className="text-[11px] text-muted-foreground">لوحة: {r.plate}</p>
+          </div>
+          <span className={`shrink-0 rounded-full px-2.5 py-1 text-[10px] font-bold ${r.tone}`}>
+            {r.status}
+          </span>
+        </div>
+      ))}
+      <div className="flex items-center justify-between rounded-2xl border border-dashed border-border px-3 py-2.5 text-[11px] text-muted-foreground">
+        <span>تنبيه: انتهاء استمارة سيارتين خلال ٧ أيام</span>
+        <Zap className="h-3.5 w-3.5 text-accent-foreground" />
+      </div>
+    </div>
+  );
+}
+
+function ContractPanel() {
+  return (
+    <div className="space-y-3">
+      <div className="rounded-2xl border border-border/60 bg-surface/60 p-4">
+        <div className="mb-4 flex items-center justify-between">
+          <span className="flex items-center gap-2 text-sm font-semibold">
+            <FileSignature className="h-4 w-4 text-primary" /> عقد إيجار إلكتروني
+          </span>
+          <span className="rounded-full bg-primary/10 px-2 py-1 text-[10px] font-bold text-primary">موثّق</span>
+        </div>
+        <dl className="space-y-2.5 text-sm">
+          {[
+            ["العميل", "محمد العتيبي"],
+            ["السيارة", "تويوتا كامري 2024"],
+            ["المدة", "٣ أيام"],
+          ].map(([k, v]) => (
+            <div key={k} className="flex items-center justify-between">
+              <dt className="text-muted-foreground">{k}</dt>
+              <dd className="font-semibold">{v}</dd>
+            </div>
+          ))}
+        </dl>
+        <div className="my-3 h-px bg-border" />
+        <div className="flex items-center justify-between">
+          <span className="text-sm text-muted-foreground">الإجمالي مع الضريبة</span>
+          <span className="font-display text-xl font-bold text-primary">٥١٧ ر.س</span>
+        </div>
+      </div>
+      <div className="grid grid-cols-3 gap-2.5">
         {[
-          { name: "كامري 2023", status: "متاحة", color: "bg-emerald-500/15 text-emerald-700", icon: Car },
-          { name: "سوناتا 2022", status: "مؤجرة", color: "bg-amber-500/15 text-amber-700", icon: Car },
-          { name: "لاند كروزر", status: "صيانة", color: "bg-red-500/15 text-red-700", icon: Car },
-        ].map((car, i) => (
-          <div
-            key={i}
-            className="flex transform items-center gap-4 rounded-2xl border border-border/60 bg-card p-4 shadow-lg transition-transform hover:scale-[1.02]"
-            style={{ animationDelay: `${i * 150}ms` }}
-          >
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-muted/50">
-              <car.icon className="h-7 w-7 text-primary" />
-            </div>
-            <div className="flex-1">
-              <p className="text-sm font-bold">{car.name}</p>
-              <p className="text-xs text-muted-foreground">رقم اللوحة: {1234 + i}-{String.fromCharCode(65 + i)}</p>
-            </div>
-            <span className={`rounded-full px-3 py-1.5 text-xs font-bold ${car.color}`}>
-              {car.status}
-            </span>
+          { icon: CalendarCheck, t: "تسليم" },
+          { icon: ShieldCheck, t: "تأمين" },
+          { icon: Check, t: "دفع" },
+        ].map((s) => (
+          <div key={s.t} className="flex flex-col items-center gap-1.5 rounded-2xl border border-border/60 bg-card px-2 py-3">
+            <s.icon className="h-4 w-4 text-primary" />
+            <span className="text-[11px] font-semibold">{s.t}</span>
           </div>
         ))}
       </div>
@@ -116,177 +162,136 @@ function FleetMockup() {
   );
 }
 
-function ContractMockup() {
-  return (
-    <div className="relative mx-auto w-full max-w-[280px] animate-float-slow sm:max-w-md">
-      <div className="absolute inset-0 scale-110 rounded-full bg-gradient-to-tr from-primary/15 to-gold/10 blur-2xl" />
-      <div className="relative transform rounded-3xl border border-border/60 bg-card p-6 shadow-2xl transition-transform duration-700 hover:rotate-0 rotate-1">
-        <div className="mb-6 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <FileSignature className="h-5 w-5 text-primary" />
-            <span className="text-sm font-bold">عقد إيجار إلكتروني</span>
-          </div>
-          <span className="rounded-full bg-emerald-500/10 px-2 py-1 text-[10px] font-bold text-emerald-600">
-            موثق
-          </span>
-        </div>
-        <div className="space-y-4">
-          <div className="flex justify-between text-sm">
-            <span className="text-muted-foreground">العميل</span>
-            <span className="font-bold">محمد العتيبي</span>
-          </div>
-          <div className="flex justify-between text-sm">
-            <span className="text-muted-foreground">السيارة</span>
-            <span className="font-bold">كامري 2023</span>
-          </div>
-          <div className="flex justify-between text-sm">
-            <span className="text-muted-foreground">المدة</span>
-            <span className="font-bold">3 أيام</span>
-          </div>
-          <div className="h-px bg-border/60" />
-          <div className="flex items-center justify-between">
-            <span className="text-sm text-muted-foreground">المبلغ</span>
-            <span className="text-xl font-black text-primary">٤٥٠ ر.س</span>
-          </div>
-          <div className="mt-4 flex gap-3">
-            <div className="flex h-10 flex-1 items-center justify-center gap-2 rounded-xl bg-muted/50">
-              <CalendarCheck className="h-4 w-4 text-primary" />
-              <span className="text-xs font-bold">تسليم</span>
-            </div>
-            <div className="flex h-10 flex-1 items-center justify-center gap-2 rounded-xl bg-primary/10">
-              <Check className="h-4 w-4 text-primary" />
-              <span className="text-xs font-bold">دفع</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-const mockups: Record<string, React.ReactNode> = {
-  dashboard: <DashboardMockup />,
-  fleet: <FleetMockup />,
-  contracts: <ContractMockup />,
+const panels: Record<TabId, React.ReactNode> = {
+  dashboard: <DashboardPanel />,
+  fleet: <FleetPanel />,
+  contracts: <ContractPanel />,
 };
 
 export function HeroSection() {
-  const [activeTab, setActiveTab] = useState("dashboard");
-  const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
-  const [name, setName] = useState("");
+  const [tab, setTab] = useState<TabId>("dashboard");
+  const [pos, setPos] = useState({ x: 50, y: 50 });
+  const [office, setOffice] = useState("");
   const [phone, setPhone] = useState("");
-  const [submitted, setSubmitted] = useState(false);
+  const [sent, setSent] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    setMousePos({
-      x: ((e.clientX - rect.left) / rect.width) * 100,
-      y: ((e.clientY - rect.top) / rect.height) * 100,
-    });
+  const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const el = cardRef.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    setPos({ x: ((e.clientX - r.left) / r.width) * 100, y: ((e.clientY - r.top) / r.height) * 100 });
   };
 
-  const handleQuote = (e: React.FormEvent) => {
+  const submit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (name.trim() && phone.trim()) setSubmitted(true);
+    if (office.trim() && phone.trim()) setSent(true);
   };
 
   return (
-    <section className="relative overflow-hidden pt-10 pb-16 lg:pt-16 lg:pb-24">
-      {/* Animated ambient background */}
-      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute -top-24 -left-24 h-[28rem] w-[28rem] rounded-full bg-gold/10 blur-3xl animate-aurora" />
-        <div className="absolute top-1/2 -right-24 h-[26rem] w-[26rem] rounded-full bg-accent/10 blur-3xl animate-aurora" style={{ animationDelay: "-8s" }} />
+    <section className="relative overflow-hidden pb-16 pt-8 sm:pt-12 lg:pb-24 lg:pt-16">
+      <div className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute inset-0 grid-fade opacity-70" />
+        <div className="absolute -right-32 -top-40 h-[30rem] w-[30rem] animate-aurora rounded-full bg-accent/20 blur-3xl" />
+        <div
+          className="absolute -left-32 top-40 h-[28rem] w-[28rem] animate-aurora rounded-full bg-primary/15 blur-3xl"
+          style={{ animationDelay: "-9s" }}
+        />
       </div>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
-          {/* Text & action column */}
-          <div className="order-2 space-y-6 lg:order-1 lg:space-y-8">
-            <div className="reveal-static space-y-3 sm:space-y-4">
-              <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-xs font-bold text-primary">
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-pulse-ring rounded-full bg-primary" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
-                </span>
-                المنصة رقم #1 لإدارة مكاتب التأجير
+        <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_1fr] lg:gap-14">
+          {/* copy */}
+          <div className="order-1 space-y-7">
+            <span className="reveal-static inline-flex items-center gap-2 rounded-full border border-primary/25 bg-primary/8 px-4 py-1.5 text-xs font-semibold text-primary">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-pulse-ring rounded-full bg-primary" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
               </span>
-              <h1 className="text-3xl font-black leading-tight sm:text-4xl lg:text-5xl xl:text-6xl">
-                موقع ونظام متكامل
-                <br />
-                <span className="gold-text">لمكتب تأجير سيّاراتك</span>
-              </h1>
-              <p className="max-w-xl text-base leading-7 text-muted-foreground lg:text-lg lg:leading-8">
-                أدر أسطولك، عقودك، وعملائك من مكان واحد. نظام أش كار يمنحك موقعاً خاصاً معزولاً بالكامل،
-                وحجوزات فورية، وعقود إلكترونية موثقة.
-              </p>
-            </div>
+              منصة سعودية متوافقة مع رؤية ٢٠٣٠
+            </span>
 
-            <div className="reveal-static flex flex-col gap-3 sm:flex-row" style={{ animationDelay: "0.15s" }}>
+            <h1
+              className="reveal-static font-display text-[2.1rem] font-bold leading-[1.25] sm:text-5xl lg:text-6xl"
+              style={{ animationDelay: "60ms" }}
+            >
+              موقع ونظام متكامل
+              <br />
+              <span className="brand-text">لمكتب تأجير سيّاراتك</span>
+            </h1>
+
+            <p
+              className="reveal-static max-w-xl text-base leading-8 text-muted-foreground lg:text-lg"
+              style={{ animationDelay: "120ms" }}
+            >
+              اشترك شهرياً أو سنوياً، واحصل خلال دقائق على موقع خاص بمكتبك ونظام يدير الأسطول
+              والحجوزات والعقود والفواتير — ببيانات معزولة تماماً عن أي مشترك آخر.
+            </p>
+
+            <div
+              className="reveal-static flex flex-col gap-3 sm:flex-row"
+              style={{ animationDelay: "180ms" }}
+            >
               <Button
                 asChild
-                className="h-12 rounded-xl bg-primary px-7 font-bold text-primary-foreground shadow-glow transition-transform hover:scale-[1.02] active:scale-95"
+                className="h-13 rounded-2xl bg-[image:var(--gradient-brand)] px-7 py-3.5 text-base font-bold text-primary-foreground shadow-glow transition-transform hover:scale-[1.03] active:scale-95"
               >
                 <Link to="/pricing">
-                  اطلب تجربة مجانية
+                  ابدأ تجربتك المجانية
                   <ArrowLeft className="h-4 w-4" />
                 </Link>
               </Button>
               <Button
                 asChild
                 variant="outline"
-                className="h-12 rounded-xl border-border/70 bg-background/80 px-7 font-bold backdrop-blur transition-colors hover:border-primary/40 hover:bg-primary/5"
+                className="h-13 rounded-2xl border-border/70 bg-card/70 px-7 py-3.5 text-base font-bold backdrop-blur transition-colors hover:border-primary/40 hover:bg-primary/5"
               >
-                <Link to="/pricing">شاهد الباقات</Link>
+                <Link to="/demo">شاهد نموذج موقع مكتب</Link>
               </Button>
             </div>
 
-            {/* Quote mini-form */}
-            <div className="reveal-static" style={{ animationDelay: "0.3s" }}>
-              {submitted ? (
-                <div className="flex items-center gap-4 rounded-2xl border border-primary/20 bg-primary/5 p-5">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
+            {/* quote form */}
+            <div className="reveal-static" style={{ animationDelay: "240ms" }}>
+              {sent ? (
+                <div className="glass flex items-center gap-4 rounded-3xl p-5">
+                  <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-primary/10">
                     <Sparkles className="h-6 w-6 text-primary" />
-                  </div>
+                  </span>
                   <div>
-                    <p className="font-bold">تم استلام طلبك بنجاح</p>
-                    <p className="text-sm text-muted-foreground">سيتواصل معك فريق المبيعات خلال ٢٤ ساعة</p>
+                    <p className="font-semibold">تم استلام طلبك بنجاح</p>
+                    <p className="text-sm text-muted-foreground">سيتواصل معك فريقنا خلال ٢٤ ساعة</p>
                   </div>
                 </div>
               ) : (
-                <form
-                  onSubmit={handleQuote}
-                  className="glass rounded-2xl p-4"
-                >
-                  <p className="mb-3 text-sm font-bold">احصل على عرض سعر مخصص لمكتبك</p>
+                <form onSubmit={submit} className="glass rounded-3xl p-4">
+                  <p className="mb-3 text-sm font-semibold">احصل على عرض سعر مخصص لمكتبك</p>
                   <div className="flex flex-col gap-3 sm:flex-row">
                     <div className="relative flex-1">
-                      <User className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                      <Building2 className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                       <Input
+                        value={office}
+                        onChange={(e) => setOffice(e.target.value)}
                         placeholder="اسم المكتب"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        className="h-11 rounded-xl border-0 bg-transparent pr-10 text-right shadow-none ring-0 focus-visible:ring-1 focus-visible:ring-primary/30"
                         required
+                        className="h-12 rounded-2xl border-border/60 bg-card/70 pr-10 text-right"
                       />
                     </div>
                     <div className="relative flex-1">
                       <Phone className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                       <Input
                         type="tel"
-                        placeholder="رقم الجوال (05xxxxxxxx)"
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
-                        className="h-11 rounded-xl border-0 bg-transparent pr-10 text-right shadow-none ring-0 focus-visible:ring-1 focus-visible:ring-primary/30"
+                        placeholder="05xxxxxxxx"
                         required
+                        className="h-12 rounded-2xl border-border/60 bg-card/70 pr-10 text-right"
                       />
                     </div>
                     <Button
                       type="submit"
-                      className="h-11 rounded-xl bg-primary px-6 font-bold text-primary-foreground shadow-glow transition-transform hover:scale-[1.02] active:scale-95"
+                      className="h-12 rounded-2xl bg-primary px-6 font-bold text-primary-foreground transition-transform hover:scale-[1.03] active:scale-95"
                     >
-                      طلب عرض سعر
+                      اطلب عرض سعر
                     </Button>
                   </div>
                 </form>
@@ -294,67 +299,79 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* Interactive product preview */}
-          <div className="order-1 lg:order-2">
+          {/* interactive product preview */}
+          <div className="order-2">
             <div
               ref={cardRef}
-              onMouseMove={handleMouseMove}
-              className="reveal-static relative overflow-hidden rounded-[2.5rem] border border-border/60 bg-card/80 shadow-soft backdrop-blur-xl transition-transform duration-200 ease-out"
+              onMouseMove={onMove}
+              onMouseLeave={() => setPos({ x: 50, y: 50 })}
+              className="reveal-static relative overflow-hidden rounded-[2rem] border border-border/70 bg-card/85 shadow-soft backdrop-blur-2xl transition-transform duration-300 ease-out sm:rounded-[2.5rem]"
               style={{
-                animationDelay: "0.2s",
-                transform: `perspective(1000px) rotateX(${(mousePos.y - 50) * -0.04}deg) rotateY(${(mousePos.x - 50) * 0.04}deg)`,
+                transform: `perspective(1200px) rotateX(${(pos.y - 50) * -0.05}deg) rotateY(${(pos.x - 50) * 0.05}deg)`,
               }}
             >
-              {/* Mouse-follow glow */}
               <div
-                className="pointer-events-none absolute -inset-px opacity-40 transition-opacity duration-300"
+                className="pointer-events-none absolute inset-0 opacity-50"
                 style={{
-                  background: `radial-gradient(600px circle at ${mousePos.x}% ${mousePos.y}%, color-mix(in oklab, var(--gold) 28%, transparent), transparent 40%)`,
+                  background: `radial-gradient(520px circle at ${pos.x}% ${pos.y}%, color-mix(in oklab, var(--accent) 26%, transparent), transparent 45%)`,
                 }}
               />
 
-              {/* Tabs */}
-              <div className="relative flex gap-2 border-b border-border/60 p-4 sm:p-5">
+              <div className="relative flex items-center justify-between gap-2 border-b border-border/60 px-4 py-3.5 sm:px-5">
+                <div className="flex gap-1.5">
+                  <span className="h-2.5 w-2.5 rounded-full bg-destructive/60" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-accent" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-primary/70" />
+                </div>
+                <span className="truncate rounded-full bg-surface px-3 py-1 text-[11px] text-muted-foreground">
+                  ashcar.sa/office/nokhba
+                </span>
+              </div>
+
+              <div className="relative flex gap-2 px-4 pt-4 sm:px-5">
                 {tabs.map((t) => (
                   <button
                     key={t.id}
-                    onClick={() => setActiveTab(t.id)}
-                    className={`flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-bold transition-all duration-300 sm:px-4 sm:text-sm ${
-                      activeTab === t.id
-                        ? "bg-primary text-primary-foreground shadow-md"
-                        : "bg-muted/50 text-muted-foreground hover:bg-muted"
+                    onClick={() => setTab(t.id)}
+                    className={`flex flex-1 items-center justify-center gap-2 rounded-2xl px-3 py-2.5 text-xs font-semibold transition-all duration-300 sm:text-sm ${
+                      tab === t.id
+                        ? "bg-[image:var(--gradient-brand)] text-primary-foreground shadow-glow"
+                        : "bg-surface text-muted-foreground hover:bg-secondary hover:text-foreground"
                     }`}
                   >
-                    <t.icon className="h-4 w-4" />
+                    <t.icon className="h-4 w-4 shrink-0" />
                     <span className="hidden sm:inline">{t.label}</span>
-                    <span className="sm:hidden">{t.id === "contracts" ? "العقود" : t.label.split(" ").pop()}</span>
+                    <span className="sm:hidden">{t.short}</span>
                   </button>
                 ))}
               </div>
 
-              {/* Tab content */}
-              <div className="relative p-6 sm:p-10">
-                <div key={activeTab} className="reveal-static">
-                  {mockups[activeTab]}
+              <div className="relative p-4 sm:p-5">
+                <div key={tab} className="reveal-static">
+                  {panels[tab]}
                 </div>
               </div>
             </div>
-          </div>
-        </div>
 
-        {/* Trust row */}
-        <div className="mt-12 grid grid-cols-2 gap-4 px-2 md:grid-cols-4">
-          {trustBadges.map((item) => (
-            <div
-              key={item.text}
-              className="flex items-center gap-3 rounded-2xl border border-border/40 bg-card/60 p-3 text-sm text-muted-foreground shadow-sm"
-            >
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-primary/10">
-                <item.icon className="h-4 w-4 text-primary" />
-              </span>
-              <span className="font-medium">{item.text}</span>
+            {/* floating chips */}
+            <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:mt-6">
+              {[
+                { icon: ShieldCheck, t: "بيانات معزولة" },
+                { icon: Zap, t: "إطلاق بدقائق" },
+                { icon: CalendarCheck, t: "حجوزات فورية" },
+                { icon: Check, t: "إلغاء متى شئت" },
+              ].map((c, i) => (
+                <div
+                  key={c.t}
+                  className="reveal-static flex items-center gap-2 rounded-2xl border border-border/60 bg-card/70 px-3 py-2.5 text-xs font-medium text-muted-foreground backdrop-blur"
+                  style={{ animationDelay: `${300 + i * 60}ms` }}
+                >
+                  <c.icon className="h-4 w-4 shrink-0 text-primary" />
+                  <span className="truncate">{c.t}</span>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </section>

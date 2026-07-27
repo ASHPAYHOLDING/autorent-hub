@@ -6,12 +6,12 @@ import { Page, SectionTitle } from "@/components/site/Page";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "تواصل معنا | سيّاراتِك" },
+      { title: "تواصل معنا | أش كار" },
       {
         name: "description",
-        content: "اطلب عرضاً تجريبياً لمنصة سيّاراتِك أو تحدث مع فريق المبيعات لتفعيل موقع مكتبك.",
+        content: "اطلب عرضاً تجريبياً لمنصة أش كار أو تحدث مع فريق المبيعات لتفعيل موقع مكتبك.",
       },
-      { property: "og:title", content: "تواصل معنا | سيّاراتِك" },
+      { property: "og:title", content: "تواصل معنا | أش كار" },
       { property: "og:description", content: "فريقنا جاهز لتفعيل موقع مكتبك خلال يوم واحد." },
     ],
   }),

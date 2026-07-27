@@ -6,15 +6,15 @@ import { Page } from "@/components/site/Page";
 export const Route = createFileRoute("/demo")({
   head: () => ({
     meta: [
-      { title: "نموذج موقع مكتب تأجير | سيّاراتِك" },
+      { title: "نموذج موقع مكتب تأجير | أش كار" },
       {
         name: "description",
         content: "شاهد كيف يبدو موقع مكتب تأجير السيارات الخاص بك: عرض السيارات، فلترة وحجز فوري.",
       },
-      { property: "og:title", content: "نموذج موقع مكتب تأجير | سيّاراتِك" },
+      { property: "og:title", content: "نموذج موقع مكتب تأجير | أش كار" },
       {
         property: "og:description",
-        content: "تجربة حية لموقع مكتب تأجير سيارات مبني على منصة سيّاراتِك.",
+        content: "تجربة حية لموقع مكتب تأجير سيارات مبني على منصة أش كار.",
       },
     ],
   }),
@@ -47,7 +47,7 @@ function Demo() {
             مكتب <span className="gold-text">النخبة</span> لتأجير السيارات
           </h1>
           <p className="mt-3 max-w-2xl leading-8 text-muted-foreground">
-            هكذا سيبدو موقع مكتبك على منصة سيّاراتِك — سياراتك فقط، بهويتك، وبيانات معزولة تماماً.
+            هكذا سيبدو موقع مكتبك على منصة أش كار — سياراتك فقط، بهويتك، وبيانات معزولة تماماً.
           </p>
         </div>
 

@@ -77,12 +77,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "سيّاراتِك | منصة SaaS لتأجير السيارات" },
+      { title: "أش كار | منصة SaaS لتأجير السيارات" },
       {
         name: "description",
         content: "منصة سحابية تمنح كل مكتب تأجير سيارات موقعاً خاصاً ونظام إدارة متكامل.",
       },
-      { property: "og:title", content: "سيّاراتِك | منصة SaaS لتأجير السيارات" },
+      { property: "og:title", content: "أش كار | منصة SaaS لتأجير السيارات" },
       {
         property: "og:description",
         content: "موقع خاص لكل مكتب تأجير سيارات مع نظام حجوزات وعقود وإدارة أسطول.",
@@ -99,8 +99,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800;900&family=Tajawal:wght@300;400;500;700;800&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;500;600;700&family=Alexandria:wght@300;400;500;600;700;800&display=swap",
       },
+
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
   }),

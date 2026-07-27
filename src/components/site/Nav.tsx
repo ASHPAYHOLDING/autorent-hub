@@ -16,14 +16,15 @@ export function Nav() {
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/70 backdrop-blur-xl">
       <nav className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5 py-4 md:flex md:justify-between">
-        <Link to="/" className="flex min-w-0 items-center gap-2">
-          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-primary text-primary-foreground">
+        <Link to="/" className="group flex min-w-0 items-center gap-2.5">
+          <span className="glow grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-primary text-primary-foreground transition-transform duration-300 group-hover:rotate-6 group-hover:scale-110">
             <Car className="h-5 w-5" />
           </span>
-          <span className="truncate text-lg font-extrabold">
-            سيّار<span className="gold-text">اتِك</span>
+          <span className="truncate font-display text-xl font-extrabold tracking-tight">
+            أش<span className="gold-text"> كار</span>
           </span>
         </Link>
+
 
         <ul className="hidden items-center gap-7 text-sm font-medium text-muted-foreground md:flex">
           {links.map((l) => (

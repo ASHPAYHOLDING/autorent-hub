@@ -15,13 +15,13 @@ import { Page, SectionTitle } from "@/components/site/Page";
 export const Route = createFileRoute("/features")({
   head: () => ({
     meta: [
-      { title: "مزايا المنصة | سيّاراتِك" },
+      { title: "مزايا المنصة | أش كار" },
       {
         name: "description",
         content:
-          "تعرّف على مزايا منصة سيّاراتِك: موقع خاص لكل مكتب، عزل بيانات، حجوزات، عقود إلكترونية وتقارير.",
+          "تعرّف على مزايا منصة أش كار: موقع خاص لكل مكتب، عزل بيانات، حجوزات، عقود إلكترونية وتقارير.",
       },
-      { property: "og:title", content: "مزايا المنصة | سيّاراتِك" },
+      { property: "og:title", content: "مزايا المنصة | أش كار" },
       {
         property: "og:description",
         content: "نظام تأجير سيارات متكامل بواجهة عربية متجاوبة وتفاعلية.",

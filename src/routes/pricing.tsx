@@ -6,12 +6,12 @@ import { Page, SectionTitle } from "@/components/site/Page";
 export const Route = createFileRoute("/pricing")({
   head: () => ({
     meta: [
-      { title: "باقات الاشتراك | سيّاراتِك" },
+      { title: "باقات الاشتراك | أش كار" },
       {
         name: "description",
         content: "باقات شهرية وسنوية لمكاتب وشركات تأجير السيارات: موقع خاص، حجوزات، عقود وتقارير.",
       },
-      { property: "og:title", content: "باقات الاشتراك | سيّاراتِك" },
+      { property: "og:title", content: "باقات الاشتراك | أش كار" },
       {
         property: "og:description",
         content: "اختر الباقة المناسبة لمكتبك — خصم حتى ٢٠٪ على الاشتراك السنوي.",

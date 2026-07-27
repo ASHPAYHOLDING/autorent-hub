@@ -35,8 +35,8 @@
   --color-surface-2: var(--surface-2);
   --color-gold: var(--gold);
   --color-gold-soft: var(--gold-soft);
-  --font-sans: "Cairo", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Cairo", sans-serif;
+  --font-sans: "Tajawal", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Tajawal", sans-serif;
   --animate-float: float 7s ease-in-out infinite;
   --animate-shine: shine 5s linear infinite;
   --animate-marquee: marquee 32s linear infinite;

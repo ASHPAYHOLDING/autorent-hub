@@ -5,9 +5,10 @@ export function Footer() {
     <footer className="border-t border-border/60 bg-surface">
       <div className="mx-auto grid max-w-7xl gap-8 px-5 py-14 md:grid-cols-4">
         <div>
-          <h3 className="text-lg font-extrabold">
-            سيّار<span className="gold-text">اتِك</span>
+          <h3 className="font-display text-xl font-extrabold">
+            أش<span className="gold-text"> كار</span>
           </h3>
+
           <p className="mt-3 text-sm leading-7 text-muted-foreground">
             منصة سحابية متكاملة لمكاتب وشركات تأجير السيارات: موقع خاص لكل عميل، إدارة أسطول،
             وحجوزات وعقود إلكترونية.

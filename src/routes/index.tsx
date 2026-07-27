@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import heroFleet from "@/assets/hero-fleet.jpg";
 import { Page, SectionTitle } from "@/components/site/Page";
-import { HeroSlider } from "@/components/site/HeroSlider";
+import { HeroSection } from "@/components/site/HeroSection";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/")({

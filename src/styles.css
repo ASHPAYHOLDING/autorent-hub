@@ -78,7 +78,7 @@
   );
   --gradient-glass: linear-gradient(
     150deg,
-    color-mix(in oklab, var(--gold) 10%, transparent),
+    color-mix(in oklab, var(--gold) 6%, transparent),
     transparent 60%
   );
   --shadow-glow: 0 22px 60px -26px color-mix(in oklab, var(--gold) 75%, transparent);

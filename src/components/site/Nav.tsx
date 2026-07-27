@@ -30,7 +30,7 @@ export function Nav() {
         </Link>
 
 
-        <ul className="hidden items-center gap-7 text-sm font-medium text-muted-foreground md:flex">
+        <ul className="hidden items-center gap-5 text-sm lg:gap-6 font-medium text-muted-foreground md:flex">
           {links.map((l) => (
             <li key={l.to}>
               <Link

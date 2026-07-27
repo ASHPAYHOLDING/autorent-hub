@@ -4,11 +4,15 @@ import { Menu, X, Car } from "lucide-react";
 
 const links = [
   { to: "/", label: "الرئيسية" },
+  { to: "/about", label: "من نحن" },
+  { to: "/services", label: "الخدمات" },
   { to: "/features", label: "المزايا" },
-  { to: "/pricing", label: "الأسعار" },
+  { to: "/pricing", label: "الباقات" },
+  { to: "/faq", label: "الأسئلة الشائعة" },
   { to: "/demo", label: "نموذج موقع" },
   { to: "/contact", label: "تواصل" },
 ] as const;
+
 
 export function Nav() {
   const [open, setOpen] = useState(false);
@@ -26,7 +30,7 @@ export function Nav() {
         </Link>
 
 
-        <ul className="hidden items-center gap-7 text-sm font-medium text-muted-foreground md:flex">
+        <ul className="hidden items-center gap-5 text-sm lg:gap-6 font-medium text-muted-foreground md:flex">
           {links.map((l) => (
             <li key={l.to}>
               <Link

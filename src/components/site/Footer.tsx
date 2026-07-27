@@ -18,13 +18,23 @@ export function Footer() {
           <h4 className="font-bold">المنصة</h4>
           <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
             <li>
+              <Link to="/about" className="hover:text-primary">
+                من نحن
+              </Link>
+            </li>
+            <li>
+              <Link to="/services" className="hover:text-primary">
+                الخدمات
+              </Link>
+            </li>
+            <li>
               <Link to="/features" className="hover:text-primary">
                 المزايا
               </Link>
             </li>
             <li>
               <Link to="/pricing" className="hover:text-primary">
-                باقات الاشتراك
+                الباقات
               </Link>
             </li>
             <li>
@@ -38,6 +48,11 @@ export function Footer() {
           <h4 className="font-bold">الدعم</h4>
           <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
             <li>
+              <Link to="/faq" className="hover:text-primary">
+                الأسئلة الشائعة
+              </Link>
+            </li>
+            <li>
               <Link to="/contact" className="hover:text-primary">
                 تواصل معنا
               </Link>
@@ -46,6 +61,7 @@ export function Footer() {
             <li>تدريب مجاني للفريق</li>
           </ul>
         </div>
+
         <div>
           <h4 className="font-bold">جاهز للانطلاق؟</h4>
           <Link

@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import {
   Globe,
   ShieldCheck,
@@ -11,9 +12,21 @@ import {
   BarChart3,
   ArrowLeft,
   Check,
+  Sparkles,
+  Phone,
+  Mail,
+  Building2,
+  User,
+  Send,
+  Shield,
+  Clock,
+  Headphones,
 } from "lucide-react";
 import heroFleet from "@/assets/hero-fleet.jpg";
 import { Page, SectionTitle } from "@/components/site/Page";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -98,6 +111,131 @@ const steps = [
 
 const logos = ["مكتب الخليج", "الرياض ليموزين", "درة السيارات", "أسطول جدة", "النخبة رينت", "سيّار"];
 
+function QuoteForm() {
+  const [submitted, setSubmitted] = useState(false);
+  const [form, setForm] = useState({ name: "", phone: "", email: "", office: "" });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (form.name && form.phone) setSubmitted(true);
+  };
+
+  if (submitted) {
+    return (
+      <div className="gradient-border glass flex flex-col items-center justify-center gap-4 p-8 text-center">
+        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
+          <Sparkles className="h-8 w-8 text-primary" />
+        </div>
+        <h3 className="text-xl font-black">تم استلام طلبك بنجاح</h3>
+        <p className="text-muted-foreground">
+          فريق أش كار سيتواصل معك خلال ٢٤ ساعة لتقديم عرض السعر المخصص.
+        </p>
+        <Button variant="outline" className="rounded-full px-6" onClick={() => setSubmitted(false)}>
+          إرسال طلب آخر
+        </Button>
+      </div>
+    );
+  }
+
+  return (
+    <form
+      onSubmit={handleSubmit}
+      className="gradient-border glass relative overflow-hidden rounded-3xl p-6 sm:p-8"
+    >
+      <div className="mb-5 flex items-center gap-3">
+        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
+          <Send className="h-5 w-5 text-primary" />
+        </div>
+        <div>
+          <h3 className="text-lg font-black">احصل على عرض سعر مجاني</h3>
+          <p className="text-xs text-muted-foreground">رد خلال ساعات، بدون التزام</p>
+        </div>
+      </div>
+
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div className="space-y-1.5">
+          <Label htmlFor="name" className="text-xs font-bold">
+            الاسم
+          </Label>
+          <div className="relative">
+            <User className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              id="name"
+              placeholder="محمد العتيبي"
+              className="rounded-xl pr-10"
+              value={form.name}
+              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              required
+            />
+          </div>
+        </div>
+        <div className="space-y-1.5">
+          <Label htmlFor="phone" className="text-xs font-bold">
+            الجوال
+          </Label>
+          <div className="relative">
+            <Phone className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              id="phone"
+              type="tel"
+              placeholder="05xxxxxxxx"
+              className="rounded-xl pr-10"
+              value={form.phone}
+              onChange={(e) => setForm({ ...form, phone: e.target.value })}
+              required
+            />
+          </div>
+        </div>
+        <div className="space-y-1.5 sm:col-span-2">
+          <Label htmlFor="office" className="text-xs font-bold">
+            اسم المكتب
+          </Label>
+          <div className="relative">
+            <Building2 className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              id="office"
+              placeholder="مكتب النخبة لتأجير السيارات"
+              className="rounded-xl pr-10"
+              value={form.office}
+              onChange={(e) => setForm({ ...form, office: e.target.value })}
+            />
+          </div>
+        </div>
+        <div className="space-y-1.5 sm:col-span-2">
+          <Label htmlFor="email" className="text-xs font-bold">
+            البريد الإلكتروني <span className="text-muted-foreground">(اختياري)</span>
+          </Label>
+          <div className="relative">
+            <Mail className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              id="email"
+              type="email"
+              placeholder="name@office.com"
+              className="rounded-xl pr-10"
+              value={form.email}
+              onChange={(e) => setForm({ ...form, email: e.target.value })}
+            />
+          </div>
+        </div>
+      </div>
+
+      <Button
+        type="submit"
+        size="lg"
+        className="glow glow-pulse mt-5 w-full rounded-full bg-primary py-6 text-base font-bold text-primary-foreground transition-transform hover:scale-[1.02]"
+      >
+        احجز عرض السعر الآن
+        <ArrowLeft className="h-4 w-4" />
+      </Button>
+
+      <p className="mt-3 flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
+        <Shield className="h-3.5 w-3.5" />
+        بياناتك محمية ولن تُشارك مع أي طرف ثالث
+      </p>
+    </form>
+  );
+}
+
 function Home() {
   return (
     <Page>
@@ -111,8 +249,8 @@ function Home() {
           className="pointer-events-none absolute top-40 left-0 h-80 w-80 rounded-full blur-3xl"
           style={{ background: "color-mix(in oklab, var(--accent) 18%, transparent)" }}
         />
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 py-16 lg:grid-cols-2 lg:py-24">
-          <div className="reveal">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 py-14 lg:grid-cols-2 lg:gap-14 lg:py-20">
+          <div className="reveal-static">
             <span className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-4 py-1.5 text-xs font-bold text-primary">
               <span className="relative flex h-2 w-2">
                 <span className="animate-pulse-ring absolute inline-flex h-full w-full rounded-full bg-primary" />
@@ -120,7 +258,7 @@ function Home() {
               </span>
               منصة SaaS لتأجير السيارات
             </span>
-            <h1 className="mt-6 text-4xl font-black leading-[1.25] sm:text-5xl lg:text-6xl">
+            <h1 className="mt-5 text-4xl font-black leading-[1.22] sm:text-5xl lg:text-[3.5rem]">
               موقع ونظام متكامل
               <br />
               <span className="gold-text">لمكتب تأجير سيّاراتك</span>
@@ -129,44 +267,50 @@ function Home() {
               اشترك شهرياً أو سنوياً واحصل خلال دقائق على موقع خاص بمكتبك لعرض سياراتك، مع نظام
               حجوزات وعقود ومحاسبة — بمساحة معزولة ١٠٠٪ عن بقية المشتركين.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                to="/pricing"
-                className="glow group inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 font-bold text-primary-foreground transition-transform hover:scale-105"
-              >
-                جرّب مجاناً ١٤ يوم
-                <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+
+            <div className="mt-7 flex flex-wrap items-center gap-4">
+              <Link to="/pricing">
+                <Button
+                  size="lg"
+                  className="glow glow-pulse group rounded-full bg-primary px-8 py-6 text-base font-bold text-primary-foreground transition-transform hover:scale-105"
+                >
+                  جرّب مجاناً ١٤ يوم
+                  <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+                </Button>
               </Link>
-              <Link
-                to="/demo"
-                className="glass hover-lift inline-flex items-center rounded-full px-7 py-3.5 font-bold"
-              >
-                شاهد نموذج موقع
+              <Link to="/demo">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="hover-lift rounded-full px-7 py-6 text-base font-bold"
+                >
+                  شاهد نموذج موقع
+                </Button>
               </Link>
             </div>
-            <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm text-muted-foreground">
-              {["بدون رسوم إعداد", "إلغاء في أي وقت", "دعم عربي 24/7"].map((i) => (
-                <li key={i} className="flex items-center gap-2">
-                  <Check className="h-4 w-4 text-primary" /> {i}
-                </li>
+
+            <div className="mt-8 grid gap-3 sm:grid-cols-2">
+              {[
+                { icon: Shield, text: "بيانات معزولة ١٠٠٪" },
+                { icon: Clock, text: "إطلاق خلال دقائق" },
+                { icon: Headphones, text: "دعم عربي 24/7" },
+                { icon: Check, text: "إلغاء في أي وقت" },
+              ].map((item) => (
+                <div
+                  key={item.text}
+                  className="flex items-center gap-2 text-sm text-muted-foreground"
+                >
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/10">
+                    <item.icon className="h-3 w-3 text-primary" />
+                  </span>
+                  {item.text}
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
 
-          <div className="reveal relative">
-            <div className="animate-float glass glow overflow-hidden rounded-4xl p-2">
-              <img
-                src={heroFleet}
-                alt="أسطول سيارات فاخرة في معرض حديث"
-                width={1600}
-                height={1008}
-                className="rounded-3xl object-cover"
-              />
-            </div>
-            <div className="glass absolute -bottom-6 right-4 rounded-2xl px-5 py-4 sm:right-10">
-              <p className="text-xs text-muted-foreground">نسبة الإشغال هذا الشهر</p>
-              <p className="gold-text text-2xl font-black">87.4%</p>
-            </div>
+          <div className="reveal-static relative lg:justify-self-end">
+            <QuoteForm />
           </div>
         </div>
 

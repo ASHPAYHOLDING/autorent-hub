@@ -56,7 +56,7 @@ export function Footer() {
         </div>
       </div>
       <div className="border-t border-border/60 px-5 py-5 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} سيّاراتِك — جميع الحقوق محفوظة
+        © {new Date().getFullYear()} أش كار — جميع الحقوق محفوظة
       </div>
     </footer>
   );

@@ -77,12 +77,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "سيّاراتِك | منصة SaaS لتأجير السيارات" },
+      { title: "أش كار | منصة SaaS لتأجير السيارات" },
       {
         name: "description",
         content: "منصة سحابية تمنح كل مكتب تأجير سيارات موقعاً خاصاً ونظام إدارة متكامل.",
       },
-      { property: "og:title", content: "سيّاراتِك | منصة SaaS لتأجير السيارات" },
+      { property: "og:title", content: "أش كار | منصة SaaS لتأجير السيارات" },
       {
         property: "og:description",
         content: "موقع خاص لكل مكتب تأجير سيارات مع نظام حجوزات وعقود وإدارة أسطول.",

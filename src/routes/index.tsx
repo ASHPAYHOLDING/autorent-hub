@@ -18,13 +18,13 @@ import { Page, SectionTitle } from "@/components/site/Page";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "سيّاراتِك | منصة تأجير سيارات SaaS لكل مكتب" },
+      { title: "أش كار | منصة تأجير سيارات SaaS لكل مكتب" },
       {
         name: "description",
         content:
           "اشترك شهرياً أو سنوياً واحصل على موقع خاص بمكتبك لعرض سياراتك مع نظام حجوزات وعقود وإدارة أسطول معزول بالكامل.",
       },
-      { property: "og:title", content: "سيّاراتِك | منصة تأجير سيارات SaaS" },
+      { property: "og:title", content: "أش كار | منصة تأجير سيارات SaaS" },
       {
         property: "og:description",
         content: "موقع متكامل ونظام إدارة لكل مكتب تأجير سيارات — بيانات معزولة واشتراك مرن.",

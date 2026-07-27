@@ -42,6 +42,9 @@
   --animate-marquee: marquee 32s linear infinite;
   --animate-pulse-ring: pulse-ring 3s ease-out infinite;
   --animate-aurora: aurora 16s ease-in-out infinite alternate;
+  --animate-float-slow: float-slow 8s ease-in-out infinite;
+  --animate-slide-in-right: slide-in-right 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+  --animate-slide-in-left: slide-in-left 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
 }
 
 :root {
@@ -167,6 +170,38 @@
   }
 }
 
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(1deg);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 @layer base {
   * {
     border-color: var(--color-border);
@@ -273,6 +308,26 @@
     mask-composite: exclude;
     pointer-events: none;
   }
+}
+
+@utility float-slow {
+  animation: float-slow 8s ease-in-out infinite;
+}
+
+@utility slide-in-right {
+  animation: slide-in-right 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+
+@utility slide-in-left {
+  animation: slide-in-left 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+
+@utility shadow-soft {
+  box-shadow: var(--shadow-soft);
+}
+
+@utility shadow-glow {
+  box-shadow: var(--shadow-glow);
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import {
   Globe,
   ShieldCheck,
@@ -11,9 +12,21 @@ import {
   BarChart3,
   ArrowLeft,
   Check,
+  Sparkles,
+  Phone,
+  Mail,
+  Building2,
+  User,
+  Send,
+  Shield,
+  Clock,
+  Headphones,
 } from "lucide-react";
 import heroFleet from "@/assets/hero-fleet.jpg";
 import { Page, SectionTitle } from "@/components/site/Page";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 export const Route = createFileRoute("/")({
   head: () => ({

@@ -1,4 +1,4 @@
-import { boolean, index, pgSchema, text, timestamp } from "drizzle-orm/pg-core";
+import { bigint, boolean, integer, index, pgSchema, text, timestamp } from "drizzle-orm/pg-core";
 
 /** Better Auth tables, isolated in the `auth` schema. Shape follows Better Auth core. */
 export const authSchema = pgSchema("auth");
@@ -72,6 +72,6 @@ export const verification = authSchema.table(
 export const rateLimit = authSchema.table("rate_limit", {
   id: text("id").primaryKey(),
   key: text("key").notNull().unique(),
-  count: text("count").notNull(),
-  lastRequest: text("last_request").notNull(),
+  count: integer("count").notNull(),
+  lastRequest: bigint("last_request", { mode: "number" }).notNull(),
 });
